@@ -15,7 +15,7 @@
 >
 	<div class="team flex-1 flex items-center h-full relative z-10">
 		<span class="text-black/60 text-xs mr-2">{rank > 0 ? rank : ''}</span>
-		<span class="font-medium">{team ?? ''}</span>
+		<span class="team-name">{team ?? ''}</span>
 		<span class="wins-dots">
 			{#each new Array(wins) as win}•{/each}
 		</span>
@@ -106,6 +106,10 @@
 
 	.round-4 .team::before {
 		display: none;
+	}
+
+	.wins-4 .team-name {
+		font-weight: bold;
 	}
 
 	.wins-dots,
