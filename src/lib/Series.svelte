@@ -4,6 +4,21 @@
 
 	export let series: PlayoffBracketSeries;
 
+	const conf = series.seriesConference.toLowerCase().replace(/\s/g, '-');
+	const match = { conf, round: series.roundNumber };
+	const highTeam = {
+		...match,
+		team: series.highSeedTricode,
+		rank: series.highSeedRank,
+		wins: series.highSeedSeriesWins,
+	};
+	const lowTeam = {
+		...match,
+		team: series.lowSeedTricode,
+		rank: series.lowSeedRank,
+		wins: series.lowSeedSeriesWins,
+	};
+
 	function getGridArea() {
 		return {
 			1: `r1-${series.displayOrderNumber}`,
@@ -12,52 +27,16 @@
 			4: 'finals',
 		}[series.roundNumber];
 	}
-
-	function getSeriesLabel() {
-		return (
-			{
-				1: 'First Round',
-				2: 'Conf. Semifinals',
-				3: 'Conf. Finals',
-				4: 'Finals',
-			}[series.roundNumber] ?? ''
-		);
-	}
 </script>
 
 <div style={`grid-area: ${getGridArea()}`} class="relative self-center">
-	<span class="absolute bottom-full text-xs uppercase font-medium text-gray-500 text-center w-full"
-		>{getSeriesLabel()}</span
-	>
-	<div class="inline-flex flex-col w-full shadow-lg bg-gray-300 dark:bg-gray-700">
+	<div class="inline-flex flex-col w-full">
 		{#if series.displayTopTeam === series.highSeedId}
-			<TeamCard
-				team={series.highSeedTricode}
-				rank={series.highSeedRank}
-				wins={series.highSeedSeriesWins}
-				isFinals={getGridArea() === 'finals'}
-				isTop
-			/>
-			<TeamCard
-				team={series.lowSeedTricode}
-				rank={series.lowSeedRank}
-				wins={series.lowSeedSeriesWins}
-				isFinals={getGridArea() === 'finals'}
-			/>
+			<TeamCard {...highTeam} isTop />
+			<TeamCard {...lowTeam} />
 		{:else}
-			<TeamCard
-				team={series.lowSeedTricode}
-				rank={series.lowSeedRank}
-				wins={series.lowSeedSeriesWins}
-				isFinals={getGridArea() === 'finals'}
-				isTop
-			/>
-			<TeamCard
-				team={series.highSeedTricode}
-				rank={series.highSeedRank}
-				wins={series.highSeedSeriesWins}
-				isFinals={getGridArea() === 'finals'}
-			/>
+			<TeamCard {...lowTeam} isTop />
+			<TeamCard {...highTeam} />
 		{/if}
 	</div>
 </div>

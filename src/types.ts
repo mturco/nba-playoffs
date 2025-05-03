@@ -7,6 +7,7 @@ export interface PlayoffBracketData {
 
 export interface PlayoffBracketSeries {
 	roundNumber: number;
+	seriesConference: string;
 	seriesNumber: number;
 	seriesWinner: number;
 	displayOrderNumber: number;

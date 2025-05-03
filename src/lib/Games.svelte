@@ -9,21 +9,19 @@
 	<h1 class="text-3xl mb-8 text-center">Upcoming Games</h1>
 
 	{#each Array.from(games.entries()) as [date, gamesForDate]}
-		<h2 class="text-gray-600 dark:text-gray-400 mb-2">
+		<h2 class="text-gray-600 mb-2">
 			{isToday(parseISO(date)) ? 'Today' : format(parseISO(date), 'EEEE, MMMM d')}
 		</h2>
 
 		<ol class="mb-8 flex gap-4">
 			{#each gamesForDate as game}
-				<li
-					class="p-4 rounded-md border-2 bg-gray-100 border-gray-300 dark:border-gray-500 dark:bg-gray-700"
-				>
+				<li class="p-4 rounded-md border-2 bg-gray-100 border-gray-300">
 					<p>
 						<span class="font-medium">{game.highSeedTricode || '???'}</span> vs
 						<span class="font-medium">{game.lowSeedTricode || '???'}</span>
 						— {game.number}
 					</p>
-					<p class="text-gray-600 dark:text-gray-400">
+					<p class="text-gray-600">
 						{#if game.statusText === 'TBD'}
 							TBD
 						{:else if game.broadcaster}

@@ -2,67 +2,136 @@
 	export let team: string | null;
 	export let rank: number;
 	export let wins: number;
-	export let isFinals = false;
+	export let round: number;
+	export let conf: string;
 	export let isTop = false;
 
-	// prettier-ignore
-	const eastTeams = ['ATL','BKN','BOS','CHA','CHI','CLE','DET','IND','MIA','MIL','NYK','ORL','PHI','TOR','WAS'];
-
-	function getSizeClasses() {
-		return isFinals ? 'h-14' : '';
-	}
-
-	function getLogoClasses() {
-		if (!team) return '';
-		return `override-${team}`;
-	}
-
-	function getTeamClasses(team: string | null, wins: number) {
-		if (!team) return '';
-		return `border-${team}-bg bg-${team}-bg/20`;
-	}
-
-	function getProgressClasses(team: string | null, wins: number) {
-		if (!team || !wins) return '';
-		const anchor = isEast(team) ? 'right-0' : 'left-0';
-		const border = isTop ? 'border-t-4' : 'border-b-4';
-		const width = wins === 1 ? 'w-1/3' : wins === 2 ? 'w-2/3' : 'w-full';
-		const shadow = wins === 4 ? (isEast(team) ? 'wins-progress-east' : 'wins-progress-west') : '';
-		return `border-${team}-bg ${width} h-full shadow-${team}-bg ${border} ${shadow} ${anchor}`;
-	}
-
-	function isEast(team: string | null) {
-		return team ? eastTeams.includes(team) : false;
-	}
+	const seed = isTop ? 'high' : 'low';
 </script>
 
-<div class={`${getSizeClasses()} ${getTeamClasses(team, wins)} relative`}>
-	{#if team}
-		<div class="p-3 flex-1 flex items-center h-full relative z-10">
-			<span class="text-black/60 dark:text-white/60 text-xs mr-2">{rank}</span>
-			<span class="font-medium">{team}</span>
-			<span class="ml-auto font-medium">{wins}</span>
-			<span class={`wins-progress absolute -z-10 ${getProgressClasses(team, wins)}`} />
-		</div>
-		<img
-			src={`/teams/${team}-bw.svg`}
-			alt={`${team} logo`}
-			class={`${getLogoClasses()} absolute top-0 bottom-0 right-0 w-2/3 h-full object-cover mx-auto`}
-		/>
-	{/if}
+<div
+	class="container seed-{seed} wins-{wins} conf-{conf} round-{round} shadow-{team}-bg relative"
+	style="--round: {round}"
+>
+	<div class="team flex-1 flex items-center h-full relative z-10">
+		<span class="text-black/60 text-xs mr-2">{rank > 0 ? rank : ''}</span>
+		<span class="font-medium">{team ?? ''}</span>
+		<span class="wins-dots">
+			{#each new Array(wins) as win}•{/each}
+		</span>
+		<span class="wins-count">{wins > 0 ? wins : ''}</span>
+	</div>
 </div>
 
 <style>
-	img {
-		object-position: center 33.33333%;
-		opacity: 0.08;
+	.container {
+		--line-color: rgb(209 213 219);
+		--line-width: 2px;
+		--dot-color: rgb(123, 126, 131);
 	}
 
-	.wins-progress-west {
-		box-shadow: var(--tw-shadow-color) -4px 0 inset;
+	.wins-4 {
+		--line-width: 4px;
+		--line-color: var(--tw-shadow-color);
+		--dot-color: var(--tw-shadow-color);
 	}
 
-	.wins-progress-east {
-		box-shadow: var(--tw-shadow-color) 4px 0 inset;
+	.round-1.seed-high {
+		padding-bottom: 3rem;
+	}
+
+	.round-2.seed-high {
+		padding-bottom: 6rem;
+	}
+
+	.round-3.seed-high {
+		padding-bottom: 14rem;
+	}
+
+	.round-4.seed-high {
+		padding-bottom: 3rem;
+	}
+
+	.round-4 {
+		width: var(--team-line-width);
+	}
+
+	.round-4.seed-low {
+		margin-left: auto;
+	}
+
+	.team {
+		height: 2rem;
+		border: 0 solid var(--line-color);
+		border-bottom-width: var(--line-width);
+		padding: 0 0.25rem 0 0.75rem;
+	}
+
+	.team::before {
+		content: '';
+		display: block;
+		position: absolute;
+		height: calc((3rem * var(--round) + 2rem) / 2 + var(--line-width) / 2);
+		border: 0 solid var(--line-color);
+	}
+
+	.seed-high .team::before {
+		top: 100%;
+	}
+
+	.seed-low .team::before {
+		bottom: 0;
+		margin-bottom: calc(-1 * var(--line-width));
+	}
+
+	.conf-west .team::before {
+		left: 100%;
+		border-left-width: var(--line-width);
+	}
+
+	.conf-east .team::before {
+		right: 100%;
+		border-right-width: var(--line-width);
+	}
+
+	.conf-west.seed-low.round-3 .team::before {
+		box-sizing: content-box;
+		padding-top: 5rem;
+	}
+
+	.conf-east.seed-high.round-3 .team::before {
+		box-sizing: content-box;
+		padding-bottom: 5rem;
+	}
+
+	.round-4 .team::before {
+		display: none;
+	}
+
+	.wins-dots,
+	.wins-count {
+		color: var(--dot-color);
+		margin-left: auto;
+	}
+
+	.wins-dots {
+		display: none;
+		font-size: 1.25rem;
+	}
+
+	.wins-count {
+		font-weight: bold;
+		font-size: 0.875rem;
+		margin-right: 0.25rem;
+	}
+
+	@media (min-width: 52rem) {
+		.wins-count {
+			display: none;
+		}
+
+		.wins-dots {
+			display: block;
+		}
 	}
 </style>
