@@ -64,7 +64,7 @@
 		height: 2rem;
 		border: 0 solid var(--line-color);
 		border-bottom-width: var(--line-width);
-		padding: 0 0.25rem 0 0.75rem;
+		padding: 0 0.625rem 0 0.625rem;
 	}
 
 	.team::before {
@@ -108,6 +108,10 @@
 		display: none;
 	}
 
+	.team-name {
+		font-size: 0.875rem;
+	}
+
 	.wins-4 .team-name {
 		font-weight: bold;
 	}
@@ -120,13 +124,23 @@
 
 	.wins-dots {
 		display: none;
-		font-size: 1.25rem;
+		font-size: 1.375rem;
+		letter-spacing: -0.1em;
 	}
 
 	.wins-count {
 		font-weight: bold;
-		font-size: 0.875rem;
-		margin-right: 0.25rem;
+		font-size: 0.8125rem;
+	}
+
+	@media (min-width: 45rem) {
+		.team-name {
+			font-size: 1rem;
+		}
+
+		.wins-count {
+			font-size: 0.875rem;
+		}
 	}
 
 	@media (min-width: 52rem) {
@@ -136,6 +150,12 @@
 
 		.wins-dots {
 			display: block;
+		}
+	}
+
+	@media (min-width: 64rem) {
+		.team {
+			padding: 0 1rem 0 0.75rem;
 		}
 	}
 </style>
