@@ -22,14 +22,20 @@ function getNextGames(allSeries: PlayoffBracketSeries[]) {
 	const nextGames: Game[] = [];
 	for (const series of allSeries) {
 		if (series.nextGameStatus) {
+			const gameNumber = parseInt((series.nextGameNumber.match(/Game (\d)/) ?? [])[1] ?? '', 10);
+			const highIsHome = [1, 2, 5, 7].includes(gameNumber);
+
 			nextGames.push({
 				id: series.nextGameId,
-				number: series.nextGameNumber,
+				number: gameNumber,
+				numberText: series.nextGameNumber,
 				statusText: series.nextGameStatusText,
 				dateTimeUtc: series.nextGameDateTimeUTC,
 				broadcaster: series.nextGameBroadcasterDisplay,
 				highSeedTricode: series.highSeedTricode,
 				lowSeedTricode: series.lowSeedTricode,
+				homeTeam: highIsHome ? series.highSeedTricode : series.lowSeedTricode,
+				awayTeam: highIsHome ? series.lowSeedTricode : series.highSeedTricode,
 			});
 		}
 	}

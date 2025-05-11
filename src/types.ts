@@ -34,10 +34,13 @@ export interface PlayoffBracketSeries {
 
 export interface Game {
 	id: string;
-	number: string;
+	number: number;
+	numberText: string;
 	statusText: string;
 	dateTimeUtc: string;
 	broadcaster: string;
 	highSeedTricode: string | null;
 	lowSeedTricode: string | null;
+	homeTeam: string | null;
+	awayTeam: string | null;
 }

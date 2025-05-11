@@ -37,7 +37,7 @@
 		{/each}
 	</Bracket>
 
-	<div class="mt-24 pt-8 border-t-2 border-gray-300">
+	<div class="games">
 		<Games games={data.nextGames} />
 	</div>
 </main>
@@ -47,6 +47,10 @@
 		font-family: 'Barlow Semi Condensed', sans-serif;
 		font-size: 2.5rem;
 		line-height: 1;
+	}
+
+	.games {
+		margin-top: 10rem;
 	}
 
 	@media (min-width: 52rem) {
