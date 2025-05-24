@@ -17,12 +17,22 @@
 			{#each gamesForDate as game}
 				<li class="game">
 					<div class="header">
-						<div class="team-logo high-seed bg-{game.awayTeam}-bg">
-							<img alt="{game.awayTeam} logo" src="/teams/{game.awayTeam}-bw.svg" />
-						</div>
-						<div class="team-logo low-seed bg-{game.homeTeam}-bg">
-							<img alt="{game.awayTeam} logo" src="/teams/{game.homeTeam}-bw.svg" />
-						</div>
+						{#if game.awayTeam}
+							<div class="team-logo high-seed bg-{game.awayTeam}-bg">
+								<img alt="{game.awayTeam} logo" src="/teams/{game.awayTeam}-bw.svg" />
+							</div>
+						{:else}
+							<div class="team-logo high-seed bg-black/10" />
+						{/if}
+						{#if game.homeTeam}
+							<div class="team-logo low-seed bg-{game.homeTeam}-bg">
+								{#if game.homeTeam}
+									<img alt="{game.awayTeam} logo" src="/teams/{game.homeTeam}-bw.svg" />
+								{/if}
+							</div>
+						{:else}
+							<div class="team-logo low-seed bg-black/10" />
+						{/if}
 					</div>
 					<div class="details">
 						<p>
