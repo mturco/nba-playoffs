@@ -29,7 +29,7 @@
 </svelte:head>
 
 <main class="p-4 flex flex-col items-center">
-	<h1 class="mt-8 -mb-20 font-light text-center z-10">{year}<br />NBA Playoffs</h1>
+	<h1 class="mt-8 -mb-4 font-light text-center z-10">{year}<br />NBA Playoffs</h1>
 
 	<Bracket>
 		{#each data.series as series}
@@ -50,18 +50,26 @@
 	}
 
 	.games {
-		margin-top: 10rem;
+		margin-top: 5rem;
 	}
 
 	@media (min-width: 52rem) {
 		h1 {
 			font-size: 3.25rem;
 		}
+
+		.games {
+			margin-top: 8rem;
+		}
 	}
 
 	@media (min-width: 64rem) {
 		h1 {
 			font-size: 3.75rem;
+		}
+
+		.games {
+			margin-top: 10rem;
 		}
 	}
 </style>
